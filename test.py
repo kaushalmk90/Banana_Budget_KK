@@ -90,7 +90,7 @@ class TestBananaBudget(unittest.TestCase):
         days = numOfDays[4]
         r = getReq(date, days)
         try:
-            print("Expected Response Code = 400"," Actual Response Code = ",r.status_code)
+            print("Expected Response Code = 400"," Actual Response Code = ",r.status_code,'\n')
             self.assertEqual(r.status_code, 400)
         except:
             print('Failed. Response Code is not 400')
@@ -105,10 +105,10 @@ class TestBananaBudget(unittest.TestCase):
         days = numOfDays[5]
         r = getReq(date, days)
         try:
-            self.assertEqual(r.status_code, 400)
+            self.assertEqual(r.status_code, 200)
         except:
             print('Failed. Response Code is not 200')
-            exit(1)
+            #exit(1)
         actualCost = float(r.json()['totalCost'].replace('$',''))
         expectedCost = calculateBudget(date, days)
         print('Total Cost returned by API',actualCost,' Expected Total Cost',expectedCost,'\n')
@@ -122,11 +122,11 @@ class TestBananaBudget(unittest.TestCase):
         days = numOfDays[6]
         r = getReq(date, days)
         try:
-            print("Expected Response Code = 400", " Actual Response Code = ", r.status_code)
+            print("Expected Response Code = 400", " Actual Response Code = ", r.status_code,'\n')
             self.assertEqual(r.status_code, 400)
         except:
             print('Failed. Response Code is not 400')
-            #exit(1)
+
 
 
     def testBlankParams(self):
@@ -137,11 +137,11 @@ class TestBananaBudget(unittest.TestCase):
         days = numOfDays[7]
         r = getReq(date, days)
         try:
-            print("Expected Response Code = 400", " Actual Response Code = ", r.status_code)
+            print("Expected Response Code = 400", " Actual Response Code = ", r.status_code,'\n')
             self.assertEqual(r.status_code, 400)
         except:
             print('Failed. Response Code is not 400')
-            #exit(1)
+
 
 if __name__ == '__main__':
     unittest.main()
