@@ -62,7 +62,7 @@ class TestBananaBudget(unittest.TestCase):
             exit(1)
         actualCost = float(r.json()['totalCost'].replace('$',''))
         expectedCost = calculateBudget(date, days)
-        print('Total Cost returned by API',actualCost,' Expected Total Cost',expectedCost,'\n')
+        print('Total Cost returned by API',actualCost,' Expected Total Cost.',expectedCost,'\n')
         self.assertEqual(actualCost,expectedCost)
 
     def testLeapYear(self):
