@@ -8,7 +8,7 @@ from core.calculateBudget import getReq
 # define different startDate parameters
 startDate = {
     1:"02-16-2019",
-    2:"08-31-1990",
+    2:"12-31-1990",
     3:"02-28-2016",
     4:"08/17/2019",
     5:"02-27-2019",
