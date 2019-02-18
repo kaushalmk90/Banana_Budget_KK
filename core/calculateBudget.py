@@ -42,11 +42,11 @@ def validateDate(date):
 
 def validateNumOfDays(num):
     try:
-        if num in range(1,365):
+        if num in range(1,366):
             return num
     except ValueError:
         pass
-    raise ValueError("Number of Days invalid")
+    raise ValueError("Number of Days is out of range")
 
 #print(calculateBudget1("2/2/2017",100))
 

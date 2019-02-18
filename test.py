@@ -1,36 +1,32 @@
 # Author: Kaushal Kulkarni
-# This file needs to be run to execute the test suite
+# This file needs to be run to execute the test suite (python3 test.py)
 
 import unittest
 from core.calculateBudget import calculateBudget
 from core.calculateBudget import getReq
 
-# define different startDate parameters
+# define startDate parameters
 startDate = {
     1:"02-16-2019",
     2:"12-31-1990",
     3:"02-28-2016",
     4:"08/17/2019",
     5:"02-27-2019",
-    6:"13-01-2018"
+    6:"13-01-2018",
+    7:""
 }
 
-# define different numOfDays parameters
+# define  numOfDays parameters
 numOfDays = {
     1:2,
     2:61,
     3:8,
     4:"a",
     5:366,
-    6:"1a"
+    6:"1a",
+    7:""
 }
 
-
-# expect output 0 (start on weekend)
-# expect valid output
-# expect valid ouput covering 2 months
-# invalid date
-# invalid num of days
 
 class TestBananaBudget(unittest.TestCase):
 
@@ -94,14 +90,12 @@ class TestBananaBudget(unittest.TestCase):
         days = numOfDays[4]
         r = getReq(date, days)
         try:
-            self.assertEqual(r.status_code, 200)
+            print("Expected Response Code = 400"," Actual Response Code = ",r.status_code)
+            self.assertEqual(r.status_code, 400)
         except:
-            print('Failed to Connect. Response Code is not 200')
+            print('Failed. Response Code is not 400')
             exit(1)
-        actualCost = float(r.json()['totalCost'].replace('$',''))
-        expectedCost = calculateBudget(date, days)
-        print('Total Cost returned by API',actualCost,' Expected Total Cost',expectedCost,'\n')
-        self.assertEqual(actualCost,expectedCost)
+
 
     def testDayOutOfRange(self):
 
@@ -111,9 +105,9 @@ class TestBananaBudget(unittest.TestCase):
         days = numOfDays[5]
         r = getReq(date, days)
         try:
-            self.assertEqual(r.status_code, 200)
+            self.assertEqual(r.status_code, 400)
         except:
-            print('Failed to Connect. Response Code is not 200')
+            print('Failed. Response Code is not 200')
             exit(1)
         actualCost = float(r.json()['totalCost'].replace('$',''))
         expectedCost = calculateBudget(date, days)
@@ -128,14 +122,26 @@ class TestBananaBudget(unittest.TestCase):
         days = numOfDays[6]
         r = getReq(date, days)
         try:
-            self.assertEqual(r.status_code, 200)
+            print("Expected Response Code = 400", " Actual Response Code = ", r.status_code)
+            self.assertEqual(r.status_code, 400)
         except:
-            print('Failed to Connect. Response Code is not 200')
-            exit(1)
-        actualCost = float(r.json()['totalCost'].replace('$',''))
-        expectedCost = calculateBudget(date, days)
-        print('Total Cost returned by API',actualCost,' Expected Total Cost',expectedCost,'\n')
-        self.assertEqual(actualCost,expectedCost)
+            print('Failed. Response Code is not 400')
+            #exit(1)
+
+
+    def testBlankParams(self):
+
+        # This test tests the scenario when Bob enters invalid Number of Days and an invalid Date
+
+        date = startDate[7]
+        days = numOfDays[7]
+        r = getReq(date, days)
+        try:
+            print("Expected Response Code = 400", " Actual Response Code = ", r.status_code)
+            self.assertEqual(r.status_code, 400)
+        except:
+            print('Failed. Response Code is not 400')
+            #exit(1)
 
 if __name__ == '__main__':
     unittest.main()
